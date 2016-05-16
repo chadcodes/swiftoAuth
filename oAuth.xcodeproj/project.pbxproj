@@ -12,7 +12,26 @@
 		D7BD1C431CEA042D00B3C637 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7BD1C411CEA042D00B3C637 /* Main.storyboard */; };
 		D7BD1C451CEA042D00B3C637 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7BD1C441CEA042D00B3C637 /* Assets.xcassets */; };
 		D7BD1C481CEA042D00B3C637 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7BD1C461CEA042D00B3C637 /* LaunchScreen.storyboard */; };
+		D7BD1C581CEA0D9700B3C637 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BD1C511CEA0D2700B3C637 /* SwiftyJSON.framework */; };
+		D7BD1C591CEA0D9700B3C637 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D7BD1C511CEA0D2700B3C637 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D7BD1C5A1CEA0D9700B3C637 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BD1C4F1CEA0D1900B3C637 /* Alamofire.framework */; };
+		D7BD1C5B1CEA0D9700B3C637 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D7BD1C4F1CEA0D1900B3C637 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7BD1C5C1CEA0D9700B3C637 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D7BD1C591CEA0D9700B3C637 /* SwiftyJSON.framework in Embed Frameworks */,
+				D7BD1C5B1CEA0D9700B3C637 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D7BD1C3A1CEA042D00B3C637 /* oAuth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oAuth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +41,8 @@
 		D7BD1C441CEA042D00B3C637 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7BD1C471CEA042D00B3C637 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7BD1C491CEA042D00B3C637 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7BD1C4F1CEA0D1900B3C637 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		D7BD1C511CEA0D2700B3C637 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7BD1C581CEA0D9700B3C637 /* SwiftyJSON.framework in Frameworks */,
+				D7BD1C5A1CEA0D9700B3C637 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +63,8 @@
 			children = (
 				D7BD1C3C1CEA042D00B3C637 /* oAuth */,
 				D7BD1C3B1CEA042D00B3C637 /* Products */,
+				D7BD1C511CEA0D2700B3C637 /* SwiftyJSON.framework */,
+				D7BD1C4F1CEA0D1900B3C637 /* Alamofire.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,6 +99,8 @@
 				D7BD1C361CEA042D00B3C637 /* Sources */,
 				D7BD1C371CEA042D00B3C637 /* Frameworks */,
 				D7BD1C381CEA042D00B3C637 /* Resources */,
+				D7BD1C5C1CEA0D9700B3C637 /* Embed Frameworks */,
+				D70EF3691CEA0E6800910D3F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -129,6 +156,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D70EF3691CEA0E6800910D3F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D7BD1C361CEA042D00B3C637 /* Sources */ = {
@@ -249,6 +294,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = oAuth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chad.oAuth;
@@ -260,6 +309,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = oAuth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chad.oAuth;
@@ -286,6 +339,7 @@
 				D7BD1C4E1CEA042D00B3C637 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
