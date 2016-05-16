@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
     
     // a URL must be of type NSURL with one parameter but will need to be unwrapped
-    let loginURL = NSURL(string: "https://www.google.com")
+    let loginURL = NSURL(string: "https://accounts.google.com/o/oauth2/v2/auth")
+    let manager = Manager()
+    var accessToken: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,15 +35,44 @@ class ViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) ->
+    func webView(webView: UIWebView, shouldStartLoadWithRequest: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         var continueToUrl = true
         do {
-            let 
+            let urlRegex = try NSRegularExpression(pattern: "code=(.+?(?=&|$))", options: NSRegularExpressionOptions())
+            let url: String? = shouldStartLoadWithRequest.URL?.absoluteString
+            let result: NSTextCheckingResult? = urlRegex.firstMatchInString(url!, options: NSMatchingOptions(), range: NSMakeRange(0, url!.characters.count))
+            let codeNSRange = result?.rangeAtIndex(1)
+            if (codeNSRange != nil) {
+                let startindex = (url?.startIndex)!.advancedBy((codeNSRange?.location)!)
+                let endIndex = (url?.startIndex)!.advancedBy((codeNSRange?.location)! + (codeNSRange?.length)!)
+                let code = url?.substringWithRange(Range<String.Index>(start: startindex, end: endIndex))
+                print(code)
+                acquireAccessToken(code!)
+                continueToUrl = false
+            }
         } catch {
-        
+            print("webview loading url failed...")
         }
-        
-        return
+        return continueToUrl
+    }
+    
+    func acquireAccessToken(code: String) {
+        let tokenURL = "https://www.google.com"
+        manager.request(.POST, tokenURL, parameters: ["code": code], encoding: .URLEncodedInURL)
+            .responseJSON { (response) -> Void in
+                switch response.result {
+                case .Success:
+                    // success
+                    if let value = response.result.value {
+                        let json = JSON(value)
+                        self.accessToken = json["access_token"].stringValue
+                        print("Access Token: \(self.accessToken)")
+                    }
+                case .Failure(let error):
+                    // failed
+                    print(error)
+                }
+        }
     }
 
     override func didReceiveMemoryWarning() {
